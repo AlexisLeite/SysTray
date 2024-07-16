@@ -1,0 +1,24 @@
+{
+  "name": "systray",
+  "author": "Alexis Leite <alexisleite@live.com>",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.timemanager",
+    "win": {
+      "target": "nsis",
+      "icon": "icon.png"
+    }
+  },
+  "keywords": [],
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "electron": "^31.2.0",
+    "electron-builder": "^24.13.3"
+  }
+}
