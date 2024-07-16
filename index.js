@@ -1,4 +1,4 @@
-const { app, Menu, Tray } = require('electron');
+const { app, Menu, Tray, BrowserWindow } = require('electron');
 const fs = require('fs');
 const path = require('path');
 const Timer = require('./src/Timer').Timer;
@@ -42,8 +42,6 @@ class TimeManager {
 function loadTimers() {
   const file = path.resolve(__dirname, 'timers.json');
 
-  const items = [];
-
   let i = 0;
   if (fs.existsSync(file)) {
     try {
@@ -51,17 +49,9 @@ function loadTimers() {
       const timersData = JSON.parse(data);
       for (const timerData of timersData) {
         if (timerData.type === 'separator') {
-          items.push({ type: 'separator' })
           TimeManager.add(`separator${i++}`, new Separator());
         } else {
           TimeManager.add(timerData.name, Timer.deserialize(timerData));
-          items.push({
-            label: timerData.name,
-            type: 'normal',
-            click: () => {
-              TimeManager.toggle(timerData.name);
-            },
-          })
         }
       }
     } catch (e) {
@@ -73,13 +63,9 @@ function loadTimers() {
       TimeManager.add(c, timer);
     })
   }
-
-  return items;
 }
 
 function report(tray) {
-  process.stdout.write('\x1B[2J\x1B[0f');
-
   let reportString = '';
 
   if (TimeManager.active) {
@@ -87,14 +73,8 @@ function report(tray) {
     reportString += `${new Separator().reportBeautiful()}\n`;
   }
 
-  Object.values(TimeManager.timers).forEach(timer => {
-    if (timer !== TimeManager.active) {
-      console.log(timer.reportBeautiful());
-      reportString += `${timer.reportBeautiful()}\n`;
-    }
-  })
-
   tray.setToolTip(reportString);
+  currentReportWindow?.send('report', JSON.stringify(Object.values(TimeManager.timers).map(c => c.reportBeautiful()), undefined, 2));
 
   try {
     saveTimers();
@@ -109,30 +89,46 @@ function saveTimers() {
   fs.writeFileSync(file, JSON.stringify(Object.values(TimeManager.timers).map(c => c.serialize())));
 }
 
+let currentReportWindow;
+function reportWindow() {
+  currentReportWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false
+    }
+  });
+
+  currentReportWindow.loadFile(path.join(__dirname, 'reports', 'report.html'));
+
+  currentReportWindow.on('close', (event) => {
+    currentReportWindow = null;
+  });
+}
+
 let tray = null;
-app.on('ready', () => {
-  tray = new Tray(path.join(__dirname, 'icon.png'));
-  const timersItems = loadTimers();
 
-  let reportString = '';
-  setInterval(() => { reportString = report(tray) }, 1000);
-
-  const contextMenu = Menu.buildFromTemplate([/* 
+let contextMenu;
+function buildContextMenu() {
+  contextMenu = Menu.buildFromTemplate([
     {
-      label: 'Report', type: 'normal', click: () => {
-        tray.displayBalloon({
-          icon: path.join(__dirname, 'icon.png'),
-          title: 'Detailed Info',
-          content: reportString
-        });
-      }
-    }, */
+      label: 'Report', type: 'normal', click: reportWindow,
+    },
     { type: 'separator' },
-    ...timersItems,
+    ...Object.values(TimeManager.timers).map(c => c instanceof Separator ? { type: 'separator' } : {
+      label: `${c.isRunning() ? '[R] ' : ''}${c.name}`,
+      type: 'normal',
+      click: () => {
+        TimeManager.toggle(c.name);
+        buildContextMenu();
+      },
+    }),
     { type: 'separator' },
     {
       label: 'Stop', type: 'normal', click: () => {
         TimeManager.stop();
+        buildContextMenu();
       }
     },
     {
@@ -144,19 +140,29 @@ app.on('ready', () => {
   ]);
 
   tray.setContextMenu(contextMenu);
+}
+
+app.on('ready', () => {
+  tray = new Tray(path.join(__dirname, 'icon.png'));
+  loadTimers();
+  buildContextMenu();
+
   tray.on('click', () => {
     tray.popUpContextMenu(contextMenu);
   })
+
+  setInterval(() => {
+    reportString = report(tray);
+    buildContextMenu();
+  }, 1000);
 });
 
 app.on('before-quit', (event) => {
   saveTimers();
 });
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+app.on('window-all-closed', (e) => {
+  e.preventDefault()
 });
 
 app.on('activate', () => {

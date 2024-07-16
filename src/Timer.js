@@ -18,7 +18,7 @@ function formatMilliseconds(ms) {
 class Timer {
   name;
   #started = -1;
-  #time = BigInt(0);
+  time = BigInt(0);
 
   static deserialize(o) {
     return new Timer(o.name, BigInt(o.time));
@@ -26,18 +26,22 @@ class Timer {
 
   constructor(name, time) {
     this.name = name;
-    this.#time = BigInt(time);
+    this.time = BigInt(time);
   }
 
   #currentLapse() {
     return BigInt((this.#started === -1 ? 0 : (Date.now() - this.#started)));
   }
 
+  isRunning() {
+    return this.#started !== -1
+  }
+
   /**
    * Returns the total time invested on this timer
    */
   report() {
-    return BigInt(this.#time + this.#currentLapse());
+    return BigInt(this.time + this.#currentLapse());
   }
 
   reportBeautiful() {
@@ -55,7 +59,7 @@ class Timer {
    * Stops the current timer
    */
   stop() {
-    this.#time += this.#currentLapse();
+    this.time += this.#currentLapse();
     this.#started = -1;
   }
 
