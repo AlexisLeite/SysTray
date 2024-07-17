@@ -1,172 +1,102 @@
 const { app, Menu, Tray, BrowserWindow } = require('electron');
-const fs = require('fs');
 const path = require('path');
-const Timer = require('./src/Timer').Timer;
-const { spawn } = require('child_process')
+const { Reporter } = require('./src/Reporter');
+const { Separator } = require('./src/Timer');
+const { TimeManager } = require('./src/TimeManager');
+const mouseEvents = require('global-mouse-events')
 
-class Separator {
-  reportBeautiful() {
-    return '------------------';
+class Application {
+  contextMenu;
+  reportWindow;
+  timeManager;
+  tray;
+
+  constructor() {
+    this.initialLoad();
   }
 
-  serialize() {
-    return { type: 'separator' }
-  }
-}
-
-class TimeManager {
-  static active = null;
-  static timers = {};
-
-  static add(name, timer) {
-    this.timers[name] = timer;
+  static init() {
+    new Application();
   }
 
-  static stop() {
-    this.active.stop();
-    this.active = null;
-  }
-
-  static toggle(name) {
-    if (this.active === this.timers[name]) {
-      this.active.stop();
-      this.active = null;
-    } else {
-      this.active?.stop();
-      this.active = this.timers[name];
-      this.active.start();
-    }
-  }
-}
-
-function loadTimers() {
-  const file = path.resolve(__dirname, 'timers.json');
-
-  let i = 0;
-  if (fs.existsSync(file)) {
-    try {
-      const data = fs.readFileSync(file);
-      const timersData = JSON.parse(data);
-      for (const timerData of timersData) {
-        if (timerData.type === 'separator') {
-          TimeManager.add(`separator${i++}`, new Separator());
-        } else {
-          TimeManager.add(timerData.name, Timer.deserialize(timerData));
+  buildContextMenu() {
+    this.contextMenu = Menu.buildFromTemplate([
+      {
+        label: 'Report', type: 'normal', click: this.openReportWindow.bind(this),
+      },
+      { type: 'separator' },
+      ...Object.values(this.timeManager.timers).map(c => c instanceof Separator ? { type: 'separator' } : {
+        label: `${c.isRunning() ? '[R] ' : ''}${c.name}`,
+        type: 'normal',
+        click: () => {
+          this.timeManager.toggle(c.name);
+          this.buildContextMenu();
+        },
+      }),
+      { type: 'separator' },
+      {
+        label: 'Stop', type: 'normal', click: () => {
+          this.timeManager.stop();
+          this.buildContextMenu();
+        }
+      },
+      {
+        label: 'Quit', type: 'normal', click: () => {
+          app.quit();
         }
       }
-    } catch (e) {
-      console.warn("Could not load timers data");
-    }
-  } else {
-    ['Apia development', 'Support', 'BPA'].forEach(c => {
-      const timer = new Timer(c, 0);
-      TimeManager.add(c, timer);
-    })
-  }
-}
+    ]);
 
-function report(tray) {
-  let reportString = '';
-
-  if (TimeManager.active) {
-    reportString = `${TimeManager.active?.reportBeautiful() ?? ''}\n`;
-    reportString += `${new Separator().reportBeautiful()}\n`;
+    this.tray.setContextMenu(this.contextMenu);
   }
 
-  tray.setToolTip(reportString);
-  currentReportWindow?.send('report', JSON.stringify(Object.values(TimeManager.timers).map(c => c.reportBeautiful()), undefined, 2));
+  initialLoad() {
+    app.on('ready', () => {
+      this.timeManager = new TimeManager();
+      this.tray = new Tray(path.join(__dirname, 'icon.png'));
+      this.buildContextMenu();
 
-  try {
-    saveTimers();
-  } catch (e) { }
+      this.tray.on('click', () => {
+        this.tray.popUpContextMenu(this.contextMenu);
+      })
+    });
 
-  return reportString;
-}
+    app.on('window-all-closed', (e) => {
+      e.preventDefault()
+    });
 
-function saveTimers() {
-  const file = path.resolve(__dirname, 'timers.json');
+    app.on('before-quit', (event) => {
+      this.timeManager.exit();
+    });
+  }
 
-  fs.writeFileSync(file, JSON.stringify(Object.values(TimeManager.timers).map(c => c.serialize())));
-}
-
-let currentReportWindow;
-function reportWindow() {
-  currentReportWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false
-    }
-  });
-
-  currentReportWindow.loadFile(path.join(__dirname, 'reports', 'report.html'));
-
-  currentReportWindow.on('close', (event) => {
-    currentReportWindow = null;
-  });
-}
-
-let tray = null;
-
-let contextMenu;
-function buildContextMenu() {
-  contextMenu = Menu.buildFromTemplate([
-    {
-      label: 'Report', type: 'normal', click: reportWindow,
-    },
-    { type: 'separator' },
-    ...Object.values(TimeManager.timers).map(c => c instanceof Separator ? { type: 'separator' } : {
-      label: `${c.isRunning() ? '[R] ' : ''}${c.name}`,
-      type: 'normal',
-      click: () => {
-        TimeManager.toggle(c.name);
-        buildContextMenu();
-      },
-    }),
-    { type: 'separator' },
-    {
-      label: 'Stop', type: 'normal', click: () => {
-        TimeManager.stop();
-        buildContextMenu();
+  openReportWindow() {
+    this.reportWindow = new BrowserWindow({
+      width: 800,
+      height: 600,
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false
       }
-    },
-    {
-      label: 'Quit', type: 'normal', click: () => {
-        saveTimers();
-        app.quit();
-      }
-    }
-  ]);
+    });
 
-  tray.setContextMenu(contextMenu);
+    this.reportWindow.loadFile(path.join(__dirname, 'reports', 'report.html'));
+
+    const interval = setInterval(() => {
+      this.reportWindow.send('report', Reporter.makeJsonReport(this.timeManager))
+    }, 1000)
+
+    this.reportWindow.on('close', () => {
+      this.reportWindow = null;
+      clearInterval(interval);
+    });
+  }
 }
 
-app.on('ready', () => {
-  tray = new Tray(path.join(__dirname, 'icon.png'));
-  loadTimers();
-  buildContextMenu();
+Application.init();
 
-  tray.on('click', () => {
-    tray.popUpContextMenu(contextMenu);
-  })
 
-  setInterval(() => {
-    reportString = report(tray);
-    buildContextMenu();
-  }, 1000);
-});
 
-app.on('before-quit', (event) => {
-  saveTimers();
-});
 
-app.on('window-all-closed', (e) => {
-  e.preventDefault()
-});
 
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
-});
+

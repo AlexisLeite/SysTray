@@ -14,6 +14,15 @@ function formatMilliseconds(ms) {
   return `${hours}:${minutes}:${seconds}`;
 }
 
+class Separator {
+  reportBeautiful() {
+    return '------------------';
+  }
+
+  serialize() {
+    return { type: 'separator' }
+  }
+}
 
 class Timer {
   name;
@@ -70,3 +79,4 @@ class Timer {
 }
 
 exports.Timer = Timer;
+exports.Separator = Separator;
