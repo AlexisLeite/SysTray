@@ -1,0 +1,29 @@
+{
+  "private": true,
+  "name": "front",
+  "version": "3.0.9",
+  "description": "> TODO: description",
+  "author": "Alexis Leite <alexisleite@live.com>",
+  "homepage": "",
+  "license": "ISC",
+  "sideEffects": false,
+  "scripts": {
+    "frontBuild": "webpack --progress",
+    "frontWatch": "webpack --progress --mode=development --watch"
+  },
+  "dependencies": {
+    "mobx": "^6.12.4",
+    "mobx-react-lite": "^4.0.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.3.1",
+    "typescript": "5.4.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "fork-ts-checker-webpack-plugin": "^9.0.2",
+    "git-revision-webpack-plugin": "^5.0.0",
+    "webpack": "^5.93.0",
+    "webpack-bundle-analyzer": "^4.10.2",
+    "webpack-cli": "^5.1.4"
+  }
+}

@@ -2,6 +2,9 @@
   "name": "systray",
   "author": "Alexis Leite <alexisleite@live.com>",
   "version": "1.0.0",
+  "workspaces": [
+    "packages/*"
+  ],
   "main": "index.js",
   "scripts": {
     "start": "electron .",
@@ -18,8 +21,13 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/react-dom": "^18.3.0",
     "electron": "^31.2.0",
-    "electron-builder": "^24.13.3"
+    "electron-builder": "^24.13.3",
+    "html-webpack-plugin": "^5.6.0",
+    "lerna": "^8.1.6",
+    "source-map-loader": "^5.0.0",
+    "ts-loader": "^9.5.1"
   },
   "dependencies": {
     "global-mouse-events": "^1.2.0"

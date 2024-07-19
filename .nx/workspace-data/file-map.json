@@ -1,0 +1,149 @@
+{
+  "version": "6.0",
+  "nxVersion": "19.5.1",
+  "deps": {
+    "global-mouse-events": "^1.2.0",
+    "@types/react-dom": "^18.3.0",
+    "electron": "^31.2.0",
+    "electron-builder": "^24.13.3",
+    "html-webpack-plugin": "^5.6.0",
+    "lerna": "^8.1.6",
+    "source-map-loader": "^5.0.0",
+    "ts-loader": "^9.5.1"
+  },
+  "pathMappings": {},
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "nonProjectFiles": [
+      {
+        "file": ".gitignore",
+        "hash": "6682711420523055390"
+      },
+      {
+        "file": "src/timers.json",
+        "hash": "8090618326683885643"
+      },
+      {
+        "file": "lerna.json",
+        "hash": "10307142885639291195"
+      },
+      {
+        "file": "package.json",
+        "hash": "1996532104428275125"
+      },
+      {
+        "file": "readme.md",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": "reports/script.js",
+        "hash": "6177607991167658771"
+      },
+      {
+        "file": "src/Timer.js",
+        "hash": "14055948553156185452"
+      },
+      {
+        "file": "src/Reporter.js",
+        "hash": "2202907633883769761"
+      },
+      {
+        "file": "reports/styles.css",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": "src/IdleTracker.js",
+        "hash": "12911880804416205444"
+      },
+      {
+        "file": "icon.png",
+        "hash": "17905801306901358678"
+      },
+      {
+        "file": "background.js",
+        "hash": "2038406838712605922"
+      },
+      {
+        "file": "src/TimeManager.js",
+        "hash": "1791343556726444164"
+      },
+      {
+        "file": "index.js",
+        "hash": "4280448256681027800"
+      },
+      {
+        "file": "reports/report.html",
+        "hash": "2472625262786268555"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "8682763845856067793"
+      },
+      {
+        "file": "nx.json",
+        "hash": "18228802250708116635"
+      },
+      {
+        "file": "src/configuration.js",
+        "hash": "5026967524163796625"
+      }
+    ],
+    "projectFileMap": {
+      "front": [
+        {
+          "file": "packages/front/dist/index.js",
+          "hash": "10989326016212498374"
+        },
+        {
+          "file": "packages/front/dist/index.js.LICENSE.txt",
+          "hash": "14647736669511024625"
+        },
+        {
+          "file": "packages/front/dist/index.js.map",
+          "hash": "5162461236375810274"
+        },
+        {
+          "file": "packages/front/package-lock.json",
+          "hash": "14793365976736450868"
+        },
+        {
+          "file": "packages/front/package.json",
+          "hash": "4521198037700755009",
+          "deps": [
+            "npm:dotenv@16.4.5",
+            "npm:fork-ts-checker-webpack-plugin",
+            "npm:git-revision-webpack-plugin",
+            "npm:webpack",
+            "npm:webpack-bundle-analyzer",
+            "npm:webpack-cli",
+            "npm:mobx",
+            "npm:mobx-react-lite",
+            "npm:react",
+            "npm:react-dom",
+            "npm:typescript@5.4.2"
+          ]
+        },
+        {
+          "file": "packages/front/src/index.tsx",
+          "hash": "9159165675264407467"
+        },
+        {
+          "file": "packages/front/tsconfig.json",
+          "hash": "9290562938275828537"
+        },
+        {
+          "file": "packages/front/webpack.config.js",
+          "hash": "70810286398900299"
+        },
+        {
+          "file": "packages/front/dist/index.html",
+          "hash": "5769347423742959395"
+        },
+        {
+          "file": "packages/front/src/index.html",
+          "hash": "1125902938689131229"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "targetDefaults": {
+    "frontBuild": {
+      "cache": true,
+      "dependsOn": [
+        "^frontBuild"
+      ],
+      "outputs": [
+        "{projectRoot}/dist"
+      ]
+    },
+    "frontWatch": {
+      "dependsOn": []
+    }
+  }
+}
