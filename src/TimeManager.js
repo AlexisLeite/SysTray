@@ -1,6 +1,6 @@
-const fs = require('fs');
-const path = require('path');
-const { Separator, Timer } = require('./Timer')
+const fs = require("fs");
+const path = require("path");
+const { Separator, Timer } = require("./Timer");
 
 class TimeManager {
   active = null;
@@ -15,14 +15,14 @@ class TimeManager {
   }
 
   exit() {
-    const file = path.resolve(__dirname, 'timers.json');
+    const file = path.resolve(__dirname, "timers.json");
 
-    fs.writeFileSync(file, JSON.stringify(Object.values(this.timers).map(c => c.serialize())));
+    fs.writeFileSync(file, JSON.stringify(Object.values(this.timers).map((c) => c.serialize())));
   }
 
   initialLoad() {
-    const file = path.resolve(__dirname, 'timers.json');
-    console.log(file, fs.existsSync(file))
+    const file = path.resolve(__dirname, "timers.json");
+    console.log(file, fs.existsSync(file));
 
     let i = 0;
     if (fs.existsSync(file)) {
@@ -30,21 +30,21 @@ class TimeManager {
         const data = fs.readFileSync(file);
         const timersData = JSON.parse(data);
         for (const timerData of timersData) {
-          if (timerData.type === 'separator') {
+          if (timerData.type === "separator") {
             this.add(`separator${i++}`, new Separator());
           } else {
             this.add(timerData.name, Timer.deserialize(timerData));
           }
         }
       } catch (e) {
-        console.error(e)
+        console.error(e);
         console.warn("Could not load timers data");
       }
     }
   }
 
   stop() {
-    this.active.stop();
+    this.active?.stop();
     this.active = null;
   }
 
