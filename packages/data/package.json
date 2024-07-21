@@ -1,0 +1,26 @@
+{
+  "name": "@time.matters/data",
+  "sideEffects": false,
+  "private": false,
+  "version": "0.0.3",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "buildDev": "rollup --config ../../config/rollup.lib.mjs --environment MODE:development,ENTRY:index.ts",
+    "build": "rollup --config ../../config/rollup.lib.mjs --environment MODE:production,ENTRY:index.ts",
+    "watch": "rollup --watch --config ../../config/rollup.lib.mjs --environment MODE:development,ENTRY:index.ts,WATCH:true"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "files": [
+    "package.json",
+    "tsconfig.json",
+    "dist/**/*.d.ts",
+    "dist/*.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
