@@ -1,5 +1,74 @@
 {
   "nodes": {
+    "@time.matters/database": {
+      "name": "@time.matters/database",
+      "type": "lib",
+      "data": {
+        "root": "packages/database",
+        "sourceRoot": "packages/database",
+        "name": "@time.matters/database",
+        "tags": [
+          "npm:public"
+        ],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": [
+              "buildDev",
+              "build",
+              "watch"
+            ]
+          }
+        },
+        "targets": {
+          "buildDev": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "buildDev"
+            },
+            "metadata": {
+              "scriptContent": "rollup --config ../../config/rollup.lib.mjs --environment MODE:development,ENTRY:index.ts",
+              "runCommand": "npm run buildDev"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "rollup --config ../../config/rollup.lib.mjs --environment MODE:production,ENTRY:index.ts",
+              "runCommand": "npm run build"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "watch": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "watch"
+            },
+            "metadata": {
+              "scriptContent": "rollup --watch --config ../../config/rollup.lib.mjs --environment MODE:development,ENTRY:index.ts,WATCH:true",
+              "runCommand": "npm run watch"
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "nx-release-publish": {
+            "dependsOn": [
+              "^nx-release-publish"
+            ],
+            "executor": "@nx/js:release-publish",
+            "options": {},
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
     "front": {
       "name": "front",
       "type": "lib",
@@ -8643,6 +8712,7 @@
     }
   },
   "dependencies": {
+    "@time.matters/database": [],
     "front": [
       {
         "source": "front",

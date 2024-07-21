@@ -29,43 +29,51 @@
   "fileMap": {
     "nonProjectFiles": [
       {
+        "file": ".eslintrc.cjs",
+        "hash": "719178432310633977"
+      },
+      {
         "file": ".gitignore",
         "hash": "12071703661981707583"
-      },
-      {
-        "file": "nx.json",
-        "hash": "1041672356126669130"
-      },
-      {
-        "file": "src/timers.json",
-        "hash": "13564355342698148682"
-      },
-      {
-        "file": "reports/script.js",
-        "hash": "6022983590723950310"
-      },
-      {
-        "file": "package.json",
-        "hash": "8349013500427122203"
-      },
-      {
-        "file": "src/configuration.js",
-        "hash": "13231277599328019260"
-      },
-      {
-        "file": "config/rollup.lib.mjs",
-        "hash": "3577147379853476480"
-      },
-      {
-        "file": "src/Timer.js",
-        "hash": "10124671496002818890"
       },
       {
         "file": ".prettierrc.json",
         "hash": "405626882901182433"
       },
       {
-        "file": "reports/styles.css",
+        "file": "background.js",
+        "hash": "2147255144288378287"
+      },
+      {
+        "file": "config/rollup.lib.mjs",
+        "hash": "3577147379853476480"
+      },
+      {
+        "file": "icon.png",
+        "hash": "17905801306901358678"
+      },
+      {
+        "file": "index.js",
+        "hash": "11980292596759399300"
+      },
+      {
+        "file": "lerna.json",
+        "hash": "2565237123621199458"
+      },
+      {
+        "file": "nx.json",
+        "hash": "1041672356126669130"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "5789362102720499215"
+      },
+      {
+        "file": "package.json",
+        "hash": "8349013500427122203"
+      },
+      {
+        "file": "readme.md",
         "hash": "3244421341483603138"
       },
       {
@@ -73,51 +81,141 @@
         "hash": "16110372112303019310"
       },
       {
-        "file": "lerna.json",
-        "hash": "2565237123621199458"
+        "file": "reports/script.js",
+        "hash": "6022983590723950310"
       },
       {
-        "file": "icon.png",
-        "hash": "17905801306901358678"
+        "file": "reports/styles.css",
+        "hash": "3244421341483603138"
       },
       {
         "file": "src/IdleTracker.js",
         "hash": "6836715279625145474"
       },
       {
-        "file": "background.js",
-        "hash": "2147255144288378287"
-      },
-      {
-        "file": "readme.md",
-        "hash": "3244421341483603138"
-      },
-      {
-        "file": "package-lock.json",
-        "hash": "5789362102720499215"
-      },
-      {
         "file": "src/Reporter.js",
         "hash": "16295523957218451732"
-      },
-      {
-        "file": "index.js",
-        "hash": "11980292596759399300"
       },
       {
         "file": "src/TimeManager.js",
         "hash": "4589058510816210695"
       },
       {
-        "file": ".eslintrc.cjs",
-        "hash": "719178432310633977"
+        "file": "src/Timer.js",
+        "hash": "10124671496002818890"
+      },
+      {
+        "file": "src/configuration.js",
+        "hash": "13231277599328019260"
+      },
+      {
+        "file": "src/timers.json",
+        "hash": "13564355342698148682"
       }
     ],
     "projectFileMap": {
+      "@time.matters/database": [
+        {
+          "file": "packages/database/.eslintrc.cjs",
+          "hash": "14073623657182636146"
+        },
+        {
+          "file": "packages/database/package.json",
+          "hash": "14615478132970694049"
+        },
+        {
+          "file": "packages/database/src/index.ts",
+          "hash": "1162989631417839245"
+        },
+        {
+          "file": "packages/database/tsconfig.json",
+          "hash": "1573200392032057320"
+        }
+      ],
       "@time.matters/data": [
         {
           "file": "packages/data/.eslintrc.cjs",
           "hash": "14073623657182636146"
+        },
+        {
+          "file": "packages/data/dist/index.d.ts",
+          "hash": "4411079412861540337"
+        },
+        {
+          "file": "packages/data/dist/index.d.ts.map",
+          "hash": "5095344842530611827"
+        },
+        {
+          "file": "packages/data/dist/index.js",
+          "hash": "11941802009787354036"
+        },
+        {
+          "file": "packages/data/dist/index.js.map",
+          "hash": "146935666102217847"
+        },
+        {
+          "file": "packages/data/dist/report/OrganizationReport.d.ts",
+          "hash": "2942451590448156511"
+        },
+        {
+          "file": "packages/data/dist/report/OrganizationReport.d.ts.map",
+          "hash": "14830624071600000961"
+        },
+        {
+          "file": "packages/data/dist/report/Report.d.ts",
+          "hash": "12045203856698302627"
+        },
+        {
+          "file": "packages/data/dist/report/Report.d.ts.map",
+          "hash": "15343584358340827201"
+        },
+        {
+          "file": "packages/data/dist/report/UserReport.d.ts",
+          "hash": "10021155590787487251"
+        },
+        {
+          "file": "packages/data/dist/report/UserReport.d.ts.map",
+          "hash": "14071508329246555082"
+        },
+        {
+          "file": "packages/data/dist/timing/Activity.d.ts",
+          "hash": "5523068285093200636"
+        },
+        {
+          "file": "packages/data/dist/timing/Activity.d.ts.map",
+          "hash": "8079576551036785459"
+        },
+        {
+          "file": "packages/data/dist/timing/Organization.d.ts",
+          "hash": "12092905919949454583"
+        },
+        {
+          "file": "packages/data/dist/timing/Organization.d.ts.map",
+          "hash": "11885136095135531332"
+        },
+        {
+          "file": "packages/data/dist/timing/Time.d.ts",
+          "hash": "17446973019954790774"
+        },
+        {
+          "file": "packages/data/dist/timing/Time.d.ts.map",
+          "hash": "742091254608610926"
+        },
+        {
+          "file": "packages/data/dist/timing/TimeSpent.d.ts",
+          "hash": "12695236807051626317"
+        },
+        {
+          "file": "packages/data/dist/timing/TimeSpent.d.ts.map",
+          "hash": "2652782753519563097"
+        },
+        {
+          "file": "packages/data/dist/timing/User.d.ts",
+          "hash": "3142468018244345996"
+        },
+        {
+          "file": "packages/data/dist/timing/User.d.ts.map",
+          "hash": "836281769988491941"
         },
         {
           "file": "packages/data/package.json",
@@ -162,86 +260,6 @@
         {
           "file": "packages/data/tsconfig.json",
           "hash": "1573200392032057320"
-        },
-        {
-          "file": "packages/data/dist/index.js.map",
-          "hash": "146935666102217847"
-        },
-        {
-          "file": "packages/data/dist/index.js",
-          "hash": "11941802009787354036"
-        },
-        {
-          "file": "packages/data/dist/timing/User.d.ts",
-          "hash": "3142468018244345996"
-        },
-        {
-          "file": "packages/data/dist/report/UserReport.d.ts",
-          "hash": "10021155590787487251"
-        },
-        {
-          "file": "packages/data/dist/index.d.ts.map",
-          "hash": "5095344842530611827"
-        },
-        {
-          "file": "packages/data/dist/timing/User.d.ts.map",
-          "hash": "836281769988491941"
-        },
-        {
-          "file": "packages/data/dist/report/Report.d.ts",
-          "hash": "12045203856698302627"
-        },
-        {
-          "file": "packages/data/dist/timing/TimeSpent.d.ts.map",
-          "hash": "2652782753519563097"
-        },
-        {
-          "file": "packages/data/dist/timing/Activity.d.ts.map",
-          "hash": "8079576551036785459"
-        },
-        {
-          "file": "packages/data/dist/timing/Activity.d.ts",
-          "hash": "5523068285093200636"
-        },
-        {
-          "file": "packages/data/dist/timing/Time.d.ts.map",
-          "hash": "742091254608610926"
-        },
-        {
-          "file": "packages/data/dist/report/Report.d.ts.map",
-          "hash": "15343584358340827201"
-        },
-        {
-          "file": "packages/data/dist/timing/TimeSpent.d.ts",
-          "hash": "12695236807051626317"
-        },
-        {
-          "file": "packages/data/dist/timing/Organization.d.ts.map",
-          "hash": "11885136095135531332"
-        },
-        {
-          "file": "packages/data/dist/index.d.ts",
-          "hash": "4411079412861540337"
-        },
-        {
-          "file": "packages/data/dist/report/UserReport.d.ts.map",
-          "hash": "14071508329246555082"
-        },
-        {
-          "file": "packages/data/dist/report/OrganizationReport.d.ts",
-          "hash": "2942451590448156511"
-        },
-        {
-          "file": "packages/data/dist/timing/Time.d.ts",
-          "hash": "17446973019954790774"
-        },
-        {
-          "file": "packages/data/dist/report/OrganizationReport.d.ts.map",
-          "hash": "14830624071600000961"
-        },
-        {
-          "file": "packages/data/dist/timing/Organization.d.ts",
-          "hash": "12092905919949454583"
         }
       ],
       "front": [
