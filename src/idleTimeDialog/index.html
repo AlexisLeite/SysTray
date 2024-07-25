@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Electron Combo Box</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .container {
+      margin: 0 auto;
+      width: 300px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Select an Option</h1>
+    <select id="comboBox">
+      <option value="Option 1">Option 1</option>
+      <option value="Option 2">Option 2</option>
+      <option value="Option 3">Option 3</option>
+    </select>
+    <br /><br />
+    <button onclick="sendSelectedOption()">Send Selected Option</button>
+  </div>
+
+  <script>
+    const { ipcRenderer } = require('electron');
+
+    function sendSelectedOption() {
+      const comboBox = document.getElementById('comboBox');
+      const selectedValue = comboBox.value;
+      ipcRenderer.send('selected-option', selectedValue);
+    }
+  </script>
+</body>
+
+</html>

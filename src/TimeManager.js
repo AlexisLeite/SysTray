@@ -1,23 +1,30 @@
 const fs = require("fs");
 const path = require("path");
 const { Separator, Timer } = require("./Timer");
+const { configuration } = require("./configuration");
 
 class TimeManager {
   active = null;
+  interval = -1;
   timers = {};
+
 
   constructor() {
     this.initialLoad();
+    this.autosave();
   }
 
   add(name, timer) {
     this.timers[name] = timer;
   }
 
-  exit() {
-    const file = path.resolve(__dirname, "timers.json");
+  autosave() {
+    this.interval = setInterval(() => { this.save() }, configuration.autosaveTime)
+  }
 
-    fs.writeFileSync(file, JSON.stringify(Object.values(this.timers).map((c) => c.serialize())));
+  exit() {
+    clearInterval(this.interval)
+    this.save();
   }
 
   initialLoad() {
@@ -41,6 +48,11 @@ class TimeManager {
         console.warn("Could not load timers data");
       }
     }
+  }
+
+  save() {
+    const file = path.resolve(__dirname, "timers.json");
+    fs.writeFileSync(file, JSON.stringify(Object.values(this.timers).map((c) => c.serialize())));
   }
 
   stop() {

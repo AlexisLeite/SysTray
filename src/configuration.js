@@ -1,3 +1,4 @@
 exports.configuration = {
-  idleTimeBeforeAway: 1000 * 5, // 5 minutes
+  autosaveTime: 1000 * 60,
+  idleTimeBeforeAway: 1000 * 60 * 5, // 5 minutes
 };

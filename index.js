@@ -123,10 +123,10 @@ class Application {
     });
 
     this.idleTracker.on("idle", () => {
-      console.log("Idle");
+      /* console.log("Idle");
 
       this.stop();
-      idleStart = Date.now();
+      idleStart = Date.now(); */
     });
   }
 }
